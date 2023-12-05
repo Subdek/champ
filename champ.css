@@ -141,47 +141,59 @@ body {
   left: 550px;
 }
 
-#fixhd_r1 {
+.league_hds p {
   position: fixed;
+  color: blue;
+}
+
+#fixhd_r1 {
   left: 10px;
   top: 10px;
 }
 
 #fixhd_r2 {
-  position: fixed;
   left: 370px;
   top: 10px;
 }
 
 #fixhd_r3 {
-  position: fixed;
   left: 730px;
   top: 10px;
 }
 
 #fixhd_r4 {
-  position: fixed;
   left: 10px;
   top: 220px;
 }
 
 #fixhd_r5 {
-  position: fixed;
   left: 370px;
   top: 220px;
 }
 
 #fixhd_r6 {
-  position: fixed;
   left: 730px;
   top: 220px;
 }
 
 #qfhead {
   position: fixed;
-  left: 10px;
+  left: 42px;
   top: 440px;
 }
+
+#sfhead {
+  position: fixed;
+  left: 437px;
+  top: 440px;
+}
+
+#fhead {
+  position: fixed;
+  left: 860px;
+  top: 440px;
+}
+
 
 .fixture_list p {
   position: fixed;
@@ -190,23 +202,39 @@ body {
 
 
 #qf1 {
-  left: 10px;
+  left: 57px;
   top: 490px;
 }
 
 #qf2 {
-  left: 10px;
+  left: 57px;
   top: 510px;
 }
 
 #qf3 {
-  left: 10px;
+  left: 57px;
   top: 530px;
 }
 
 #qf4 {
-  left: 10px;
+  left: 57px;
   top: 550px;
+}
+
+#sf1 {
+  left: 417px;
+  top: 490px;
+}
+
+#sf2 {
+  left: 417px;
+  top: 510px;
+}
+
+
+#FINAL {
+  left: 777px;
+  top: 490px;
 }
 
 #match_hd {
@@ -219,4 +247,11 @@ body {
   text-align: center;
   top: 125px;
   font-size: 75px;
+}
+
+#end_msg {
+  position: fixed;
+  font-size: 30px;
+  left: 400px;
+  top: 600px;
 }
