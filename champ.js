@@ -280,10 +280,5 @@ function set_rank() {
   }
 }
 
-//document.getElementById("xxx").innerHTML = "XXX" + "&nbsp"
-//for (i = 1; i < 7; i++) {xxxx}
-//if (x==y) {xxx}
-//Math.floor(0.6)
-//Math.random() = 0.536354836384
 
 
