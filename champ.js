@@ -1,7 +1,7 @@
 const team_name = [
   "MAN UTD", "MANCITY", "ARSENAL", "LIVPOOL",
   "TOTTHAM", "NEWCAST", "SUNLAND", "BRISTOL",
-  "CHELSEA", "CRYSPAL", "EVERTON", "WOLVES.",
+  "CHELSEA", "CRYSPAL", "EVERTON", "WOLVERS",
   "IPSWICH", "NORWICH", "SHEFWED", "REALMAD",
 ]
 
@@ -15,6 +15,7 @@ const fixlist = [
 ]
 
 var teama; var teamb; var fix_no; var play = 0; var scorea; var scoreb;
+var qteam; var qf = 0;
 
 
 const group_name = [
@@ -27,7 +28,11 @@ const group_name = [
 
 const rank = [];
 
-const tabdata = []
+const results = [];
+
+const tabdata = [];
+
+const qteams = [];
 
 start();
 tables();
@@ -38,8 +43,12 @@ function start() {
     tabdata[(y * 7) + 6] = y
   }
 
+  for (i = 0; i < 96; i++) { results[i] = " " }
+  for (i = 0; i < 8; i++) { qteams[i] = "......." }
 
-  fix_no = 0;
+
+
+  fix_no = 64;
   set_rank();
 
   //round1 fixtures style
@@ -93,30 +102,33 @@ function tables() {
 
   clear_screen();
   rank_teams();
-  document.getElementById("match").innerHTML = "MATCH";
+  document.getElementById("match").innerHTML = "NEXT MATCH";
   play = 0;
 
 
   document.getElementById("LGA_HD").innerHTML =
-    "GROUP A...P W D L Pt GD RT";
+    "GROUP A...P W D L Pt GD";
   document.getElementById("LGB_HD").innerHTML =
-    "GROUP B...P W D L Pt GD RT";
+    "GROUP B...P W D L Pt GD";
   document.getElementById("LGC_HD").innerHTML =
-    "GROUP C...P W D L Pt GD RT";
+    "GROUP C...P W D L Pt GD";
   document.getElementById("LGD_HD").innerHTML =
-    "GROUP D...P W D L Pt GD RT";
+    "GROUP D...P W D L Pt GD";
 
   for (i = 0; i < 16; i++) {
     x = (i * 7);
 
-    document.getElementById("LG" + (rank[i])).innerHTML = team_name[i] + "..." +
+    qteam = "LG" + (rank[i]);
+
+
+    document.getElementById(qteam).innerHTML = team_name[i] + "..." +
       tabdata[x] + " " +
       tabdata[x + 1] + " " +
       tabdata[x + 2] + " " +
       tabdata[x + 3] + " " +
       tabdata[x + 4] + "&nbsp" + "&nbsp" +
-      tabdata[x + 5] + "&nbsp" + "&nbsp" +
-      tabdata[x + 6]
+      tabdata[x + 5]
+    //+ "&nbsp" + "&nbsp" + tabdata[x + 6]
 
   }
 }
@@ -147,7 +159,9 @@ function rank_teams() {
 function fixres() {
 
   clear_screen();
-  document.getElementById("match").innerHTML = "MATCH";
+  document.getElementById("tables").style.visibility = "visible";
+  document.getElementById("match").style.visibility = "visible";
+  document.getElementById("match").innerHTML = "NEXT MATCH";
   play = 0;
 
 
@@ -160,7 +174,8 @@ function fixres() {
 
 
     document.getElementById("fix" + (i)).innerHTML =
-      "(" + gnx + ") " + teama + " (-)v(-) " + teamb;
+      "(" + gnx + ") " + teama + " (" +
+      results[ix] + ")v(" + results[ix + 1] + ") " + teamb;
   }
 
   for (i = 1; i < 7; i++) {
@@ -168,10 +183,25 @@ function fixres() {
   }
 
   document.getElementById("qfhead").innerHTML = "QUARTER FINALS";
-  document.getElementById("qf1").innerHTML = "MANU (2) V (1) CHEL";
-  document.getElementById("qf2").innerHTML = "MANU (2) V (1) CHEL";
-  document.getElementById("qf3").innerHTML = "MANU (2) V (1) CHEL";
-  document.getElementById("qf4").innerHTML = "MANU (2) V (1) CHEL";
+  document.getElementById("sfhead").innerHTML = "SEMI FINALS";
+  document.getElementById("fhead").innerHTML = "FINAL";
+
+  document.getElementById("qf1").innerHTML =
+    qteams[0] + " ( )v( ) " + qteams[7];
+  document.getElementById("qf2").innerHTML =
+    qteams[1] + " ( )v( ) " + qteams[6];
+  document.getElementById("qf3").innerHTML =
+    qteams[2] + " ( )v( ) " + qteams[5];
+  document.getElementById("qf4").innerHTML =
+    qteams[3] + " ( )v( ) " + qteams[4];
+
+  document.getElementById("sf1").innerHTML =
+    "....... ( )v( ) .......";
+  document.getElementById("sf2").innerHTML =
+    "....... ( )v( ) .......";
+  document.getElementById("FINAL").innerHTML =
+    "....... ( )v( ) .......";
+
 }
 
 function match() {
@@ -196,6 +226,10 @@ function score() {
   scorea = Math.floor(Math.random() * 3);
   scoreb = Math.floor(Math.random() * 3);
 
+  results[fix_no] = scorea;
+  results[fix_no + 1] = scoreb;
+
+
   document.getElementById("fix_main").innerHTML =
     team_name[teama] +
     " (" + scorea + ")v(" + scoreb + ") " +
@@ -203,35 +237,72 @@ function score() {
 
   if (scorea > scoreb) {
     tabdata[(teama * 7) + 4] = tabdata[(teama * 7) + 4] + 3;
+    tabdata[(teama * 7) + 1]++;
+    tabdata[(teamb * 7) + 3]++;
 
   }
 
   if (scoreb > scorea) {
     tabdata[(teamb * 7) + 4] = tabdata[(teamb * 7) + 4] + 3;
+    tabdata[(teamb * 7) + 1]++;
+    tabdata[(teama * 7) + 3]++;
+
   }
 
   if (scorea == scoreb) {
     tabdata[(teama * 7) + 4]++;
     tabdata[(teamb * 7) + 4]++;
+    tabdata[(teama * 7) + 2]++;
+    tabdata[(teamb * 7) + 2]++;
   }
 
+  tabdata[(teama * 7) + 5] =
+    tabdata[(teama * 7) + 5] + scorea - scoreb;
+  tabdata[(teamb * 7) + 5] =
+    tabdata[(teamb * 7) + 5] + scoreb - scorea;
+
+
   tabdata[(teama * 7) + 6] =
-    (tabdata[(teama * 7) + 4] * 100) + teama;
+    (tabdata[(teama * 7) + 4] * 10000) +
+    (tabdata[(teama * 7) + 5] * 100) +
+    teama;
   tabdata[(teamb * 7) + 6] =
-    (tabdata[(teamb * 7) + 4] * 100) + teamb;
+    (tabdata[(teamb * 7) + 4] * 10000) +
+    (tabdata[(teamb * 7) + 5] * 100) +
+    teamb;
 
+  if (fix_no == 94) {
 
+    document.getElementById("tables").style.visibility = "hidden";
+    document.getElementById("match").style.visibility = "hidden";
+    document.getElementById("end_msg").innerHTML = "END OF REGULAR SEASON. <br> CLICK FOR Q-FINAL DRAW";
 
+    qfinal();
 
+  }
 
-
-  document.getElementById("match").innerHTML = "MATCH";
+  document.getElementById("match").innerHTML = "NEXT MATCH";
   fix_no = fix_no + 2;
   play = 0;
   tabdata[teama * 7]++;
   tabdata[teamb * 7]++;
 
 }
+
+function qfinal() {
+  rank_teams();
+  for (f = 0; f < 16; f++) {
+    if (rank[f] == 0) { qteams[0] = team_name[f] };
+    if (rank[f] == 4) { qteams[1] = team_name[f] };
+    if (rank[f] == 8) { qteams[2] = team_name[f] };
+    if (rank[f] == 12) { qteams[3] = team_name[f] };
+
+  }
+
+
+
+}
+
 
 function clear_screen() {
 
@@ -240,7 +311,9 @@ function clear_screen() {
   document.getElementById("LGC_HD").innerHTML = " ";
   document.getElementById("LGD_HD").innerHTML = " ";
   document.getElementById("qfhead").innerHTML = " ";
-
+  document.getElementById("sfhead").innerHTML = " ";
+  document.getElementById("fhead").innerHTML = " ";
+  document.getElementById("end_msg").innerHTML = " ";
 
   for (i = 0; i < 16; i++) {
     document.getElementById("LG" + i).innerHTML = " "
@@ -264,7 +337,9 @@ function clear_screen() {
   document.getElementById("fix_main").innerHTML = "";
 
 
-
+  document.getElementById("sf1").innerHTML = "";
+  document.getElementById("sf2").innerHTML = "";
+  document.getElementById("FINAL").innerHTML = "";
 
 
 
@@ -280,5 +355,11 @@ function set_rank() {
   }
 }
 
+//document.getElementById("xxx").innerHTML = "XXX" + "&nbsp"
+//document.getElementById("xxx").style.visibility = "hidden"/"visible"
+//for (i = 1; i < 7; i++) {xxxx}
+//if (x==y) {xxx}
+//Math.floor(0.6)
+//Math.random() = 0.536354836384
 
 
