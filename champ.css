@@ -201,38 +201,38 @@ body {
 }
 
 
-#qf1 {
+#fix48 {
   left: 57px;
   top: 490px;
 }
 
-#qf2 {
+#fix49 {
   left: 57px;
   top: 510px;
 }
 
-#qf3 {
+#fix50 {
   left: 57px;
   top: 530px;
 }
 
-#qf4 {
+#fix51 {
   left: 57px;
   top: 550px;
 }
 
-#sf1 {
+#fix52 {
   left: 417px;
   top: 490px;
 }
 
-#sf2 {
+#fix53 {
   left: 417px;
   top: 510px;
 }
 
 
-#FINAL {
+#fix54 {
   left: 777px;
   top: 490px;
 }
@@ -252,6 +252,6 @@ body {
 #end_msg {
   position: fixed;
   font-size: 30px;
-  left: 400px;
-  top: 600px;
+  left: 750px;
+  top: 580px;
 }
