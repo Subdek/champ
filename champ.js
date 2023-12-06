@@ -3,6 +3,7 @@ const team_name = [
   "TOTTHAM", "NEWCAST", "SUNLAND", "BRISTOL",
   "CHELSEA", "CRYSPAL", "EVERTON", "WOLVERS",
   "IPSWICH", "NORWICH", "SHEFWED", "REALMAD",
+  "......."
 ]
 
 const fixlist = [
@@ -11,20 +12,20 @@ const fixlist = [
   0, 3, 1, 2, 4, 7, 5, 6, 8, 11, 9, 10, 12, 15, 13, 14,
   1, 0, 3, 2, 5, 4, 7, 6, 9, 8, 11, 10, 13, 12, 15, 14,
   0, 2, 1, 3, 4, 6, 5, 7, 8, 10, 9, 11, 12, 14, 13, 15,
-  3, 0, 2, 1, 7, 4, 6, 5, 11, 8, 10, 9, 15, 12, 14, 13
+  3, 0, 2, 1, 7, 4, 6, 5, 11, 8, 10, 9, 15, 12, 14, 13,
+  16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16
 ]
 
 var teama; var teamb; var fix_no; var play = 0; var scorea; var scoreb;
-var qteam; var qf = 0;
+var qteam; var stage = 0; var brackets
 
 
 const group_name = [
   "A", "A", "A", "A",
   "B", "B", "B", "B",
   "C", "C", "C", "C",
-  "D", "D", "D", "D"
+  "D", "D", "D", "D",
 ]
-
 
 const rank = [];
 
@@ -43,12 +44,11 @@ function start() {
     tabdata[(y * 7) + 6] = y
   }
 
-  for (i = 0; i < 96; i++) { results[i] = " " }
-  for (i = 0; i < 8; i++) { qteams[i] = "......." }
+  for (i = 0; i < 110; i++) { results[i] = " " }
 
 
 
-  fix_no = 64;
+  fix_no = 80;
   set_rank();
 
   //round1 fixtures style
@@ -165,16 +165,17 @@ function fixres() {
   play = 0;
 
 
-  for (i = 0; i < 48; i++) {
+
+  for (i = 0; i < 55; i++) {
     ix = i * 2;
     gnx = group_name[fixlist[ix]];
     teama = team_name[fixlist[ix]];
     teamb = team_name[fixlist[ix + 1]];
 
-
+    if (i < 48) { brackets = "(" + gnx + ") " } else { brackets = "" };
 
     document.getElementById("fix" + (i)).innerHTML =
-      "(" + gnx + ") " + teama + " (" +
+      brackets + teama + " (" +
       results[ix] + ")v(" + results[ix + 1] + ") " + teamb;
   }
 
@@ -186,22 +187,6 @@ function fixres() {
   document.getElementById("sfhead").innerHTML = "SEMI FINALS";
   document.getElementById("fhead").innerHTML = "FINAL";
 
-  document.getElementById("qf1").innerHTML =
-    qteams[0] + " ( )v( ) " + qteams[7];
-  document.getElementById("qf2").innerHTML =
-    qteams[1] + " ( )v( ) " + qteams[6];
-  document.getElementById("qf3").innerHTML =
-    qteams[2] + " ( )v( ) " + qteams[5];
-  document.getElementById("qf4").innerHTML =
-    qteams[3] + " ( )v( ) " + qteams[4];
-
-  document.getElementById("sf1").innerHTML =
-    "....... ( )v( ) .......";
-  document.getElementById("sf2").innerHTML =
-    "....... ( )v( ) .......";
-  document.getElementById("FINAL").innerHTML =
-    "....... ( )v( ) .......";
-
 }
 
 function match() {
@@ -210,10 +195,19 @@ function match() {
     return;
   }
   clear_screen();
-  rndx = (Math.floor(fix_no / 16)) + 1;
   teama = fixlist[fix_no]; teamb = fixlist[fix_no + 1];
+  mhead = "ROUND " + ((Math.floor(fix_no / 16)) + 1) + ": GROUP " + group_name[teama];
+  if (fix_no > 95 && fix_no < 104) {
+    mhead = "QUARTER FINAL"
+  };
+  if (fix_no > 103 && fix_no < 107) {
+    mhead = "SEMI FINAL"
+  };
+  if (fix_no == 108) {
+    mhead = "FINAL"
+  };
 
-  document.getElementById("match_hd").innerHTML = "ROUND " + rndx + ": GROUP " + group_name[teama];
+  document.getElementById("match_hd").innerHTML = mhead;
   document.getElementById("fix_main").innerHTML =
     team_name[teama] + " (-)v(-) " + team_name[teamb];
   document.getElementById("match").innerHTML = "PLAY";
@@ -225,6 +219,7 @@ function match() {
 function score() {
   scorea = Math.floor(Math.random() * 3);
   scoreb = Math.floor(Math.random() * 3);
+  if (stage == 1 && scorea == scoreb) { scoreb = scorea + 1 };
 
   results[fix_no] = scorea;
   results[fix_no + 1] = scoreb;
@@ -235,6 +230,19 @@ function score() {
     " (" + scorea + ")v(" + scoreb + ") " +
     team_name[teamb];
 
+  if (stage == 0) { tabsort() }
+  if (fix_no == 94) { stage = 1; qf_fix() }
+  if (stage == 1) { knockout() }
+
+
+  document.getElementById("match").innerHTML = "NEXT MATCH";
+  fix_no = fix_no + 2;
+  play = 0;
+
+
+}
+
+function tabsort() {
   if (scorea > scoreb) {
     tabdata[(teama * 7) + 4] = tabdata[(teama * 7) + 4] + 3;
     tabdata[(teama * 7) + 1]++;
@@ -271,38 +279,60 @@ function score() {
     (tabdata[(teamb * 7) + 5] * 100) +
     teamb;
 
-  if (fix_no == 94) {
-
-    document.getElementById("tables").style.visibility = "hidden";
-    document.getElementById("match").style.visibility = "hidden";
-    document.getElementById("end_msg").innerHTML = "END OF REGULAR SEASON. <br> CLICK FOR Q-FINAL DRAW";
-
-    qfinal();
-
-  }
-
-  document.getElementById("match").innerHTML = "NEXT MATCH";
-  fix_no = fix_no + 2;
-  play = 0;
   tabdata[teama * 7]++;
   tabdata[teamb * 7]++;
+}
+
+function knockout() {
+  if (scorea > scoreb) { winner = teama } else { winner = teamb };
+
+  if (fix_no == 96) { fixlist[104] = winner };
+  if (fix_no == 98) { fixlist[105] = winner };
+  if (fix_no == 100) { fixlist[106] = winner };
+  if (fix_no == 102) { fixlist[107] = winner };
+  if (fix_no == 104) { fixlist[108] = winner };
+  if (fix_no == 106) { fixlist[109] = winner };
+
+
 
 }
 
-function qfinal() {
+function qf_fix() {
+  document.getElementById("match").style.visibility = "hidden";
+
+  document.getElementById("end_msg").innerHTML = "END OF REGULAR SEASON. CLICK FOR Q-FINAL DRAW";
+
   rank_teams();
+
   for (f = 0; f < 16; f++) {
-    if (rank[f] == 0) { qteams[0] = team_name[f] };
-    if (rank[f] == 4) { qteams[1] = team_name[f] };
-    if (rank[f] == 8) { qteams[2] = team_name[f] };
-    if (rank[f] == 12) { qteams[3] = team_name[f] };
 
-  }
+    if (rank[f] == 0) {
+      fixlist[96] = f
+    };
+    if (rank[f] == 13) {
+      fixlist[97] = f
+    };
+    if (rank[f] == 4) {
+      fixlist[98] = f
+    };
+    if (rank[f] == 9) {
+      fixlist[99] = f
+    };
+    if (rank[f] == 8) {
+      fixlist[100] = f
+    };
+    if (rank[f] == 5) {
+      fixlist[101] = f
+    };
+    if (rank[f] == 12) {
+      fixlist[102] = f
+    };
+    if (rank[f] == 1) {
+      fixlist[103] = f
+    };
 
-
-
+  };
 }
-
 
 function clear_screen() {
 
@@ -319,13 +349,9 @@ function clear_screen() {
     document.getElementById("LG" + i).innerHTML = " "
   }
 
-  document.getElementById("qf1").innerHTML = " ";
-  document.getElementById("qf2").innerHTML = " ";
-  document.getElementById("qf3").innerHTML = " ";
-  document.getElementById("qf4").innerHTML = " ";
 
 
-  for (i = 0; i < 48; i++) {
+  for (i = 0; i < 55; i++) {
     document.getElementById("fix" + i).innerHTML = " "
   }
 
@@ -337,9 +363,6 @@ function clear_screen() {
   document.getElementById("fix_main").innerHTML = "";
 
 
-  document.getElementById("sf1").innerHTML = "";
-  document.getElementById("sf2").innerHTML = "";
-  document.getElementById("FINAL").innerHTML = "";
 
 
 
