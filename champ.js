@@ -48,7 +48,7 @@ function start() {
 
 
 
-  fix_no = 80;
+  fix_no = 0;
   set_rank();
 
   //round1 fixtures style
