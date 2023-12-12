@@ -243,11 +243,39 @@ body {
   font-size: 50px;
 }
 
+#timer {
+  position: absolute;
+  top: 200px;
+  left: 300px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 100px;
+  color: blue;
+}
+
+
 #fix_main {
   text-align: center;
   top: 125px;
   font-size: 75px;
 }
+
+#teama_level {
+  position: absolute;
+  top: 220px;
+  left: 30px;
+  font-size: 30px;
+  color: crimson;
+}
+
+#teamb_level {
+  position: absolute;
+  top: 220px;
+  left: 958px;
+  font-size: 30px;
+  color: crimson;
+}
+
+
 
 #end_msg {
   position: fixed;
