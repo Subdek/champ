@@ -207,10 +207,15 @@ function match() {
     mhead = "FINAL"
   };
 
-  document.getElementById("match_hd").innerHTML = mhead;
+document.getElementById("match_hd").innerHTML = mhead;
   document.getElementById("fix_main").innerHTML =
     team_name[teama] + " (-)v(-) " + team_name[teamb];
-  document.getElementById("match").innerHTML = "PLAY";
+  document.getElementById("teama_level").innerHTML =
+    "RANK:" + (level[teama] / 6);
+  document.getElementById("teamb_level").innerHTML =
+    "RANK:" + (level[teamb] / 6);
+  document.getElementById("timer").innerHTML = half_name[half] + " HALF: " + time;
+  document.getElementById("match").innerHTML = "1st HALF";
   play = 1;
 
 
