@@ -1,10 +1,12 @@
 const team_name = [
-  "MAN UTD", "MANCITY", "ARSENAL", "LIVPOOL",
-  "TOTTHAM", "NEWCAST", "SUNLAND", "BRISTOL",
-  "CHELSEA", "CRYSPAL", "EVERTON", "WOLVERS",
-  "IPSWICH", "NORWICH", "SHEFWED", "REALMAD",
+  "MAN UTD", "ARSENAL", "EVERTON", "BRISTOL",
+  "MANCITY", "NEWCAST", "SUNLAND", "IPSWICH",
+  "REALMAD", "TOTTHAM", "WOLVERS", "SHEFWED",
+  "LIVPOOL", "CHELSEA", "CRYSPAL", "NORWICH",
   "......."
 ]
+
+const half_name = ["1st", "1st", "2nd"]
 
 const fixlist = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
@@ -16,8 +18,22 @@ const fixlist = [
   16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16
 ]
 
+const dice = [
+  0, 0, 1, 2, 3, 3,
+  0, 0, 1, 2, 2, 3,
+  0, 0, 1, 1, 2, 3,
+  0, 0, 1, 1, 2, 2,
+  0, 0, 0, 1, 2, 2,
+
+]
+
+
+
+
+
+
 var teama; var teamb; var fix_no; var play = 0; var scorea; var scoreb;
-var qteam; var stage = 0; var brackets
+var qteam; var stage = 0; var brackets; var time = 0; var half = 0; var scorea = 0; var scoreb = 0; var kick_off = 0; var subx = 0;
 
 
 const group_name = [
@@ -26,6 +42,8 @@ const group_name = [
   "C", "C", "C", "C",
   "D", "D", "D", "D",
 ]
+
+const level = [6, 12, 18, 24, 6, 12, 18, 24, 6, 12, 18, 24, 6, 12, 18, 24,]
 
 const rank = [];
 
@@ -46,7 +64,9 @@ function start() {
 
   for (i = 0; i < 110; i++) { results[i] = " " }
 
-
+  for (f = 0; f < 16; f++) {
+    tabdata[(f * 7) + 6] = (15 - f)
+  }
 
   fix_no = 0;
   set_rank();
@@ -190,11 +210,30 @@ function fixres() {
 }
 
 function match() {
-  if (play == 1) {
-    score();
-    return;
+
+  if (half == 3) { half = 0 }
+
+  if (half == 2) {
+    score(); end_match(); half = 3
   }
+
+  if (half == 1) {
+    score();
+    document.getElementById("match").innerHTML = "2nd HALF";
+    half = 2;
+  }
+
+  if (half == 0) {
+    match_setup(); half = 1;
+  }
+}
+
+
+function match_setup() {
   clear_screen();
+  document.getElementById("fixres").style.visibility = "hidden";
+  document.getElementById("tables").style.visibility = "hidden";
+
   teama = fixlist[fix_no]; teamb = fixlist[fix_no + 1];
   mhead = "ROUND " + ((Math.floor(fix_no / 16)) + 1) + ": GROUP " + group_name[teama];
   if (fix_no > 95 && fix_no < 104) {
@@ -207,27 +246,31 @@ function match() {
     mhead = "FINAL"
   };
 
-document.getElementById("match_hd").innerHTML = mhead;
+  document.getElementById("match_hd").innerHTML = mhead;
   document.getElementById("fix_main").innerHTML =
     team_name[teama] + " (-)v(-) " + team_name[teamb];
   document.getElementById("teama_level").innerHTML =
     "RANK:" + (level[teama] / 6);
   document.getElementById("teamb_level").innerHTML =
     "RANK:" + (level[teamb] / 6);
-  document.getElementById("timer").innerHTML = half_name[half] + " HALF: " + time;
+  //document.getElementById("timer").innerHTML = half_name[half] + " HALF: " + time;
   document.getElementById("match").innerHTML = "1st HALF";
-  play = 1;
 
 
 }
 
-function score() {
-  scorea = Math.floor(Math.random() * 3);
-  scoreb = Math.floor(Math.random() * 3);
-  if (stage == 1 && scorea == scoreb) { scoreb = scorea + 1 };
+//function start_half() { const timx = setInterval(print_time, 100); }
 
-  results[fix_no] = scorea;
-  results[fix_no + 1] = scoreb;
+
+//function print_time() { if (time > 10) { clearInterval(timx); return; }; document.getElementById("timer").innerHTML = half_name[half] + " HALF: " + time; time++; }
+
+function score() {
+
+  xx = Math.floor(Math.random() * 6);
+  yy = Math.floor(Math.random() * 6);
+
+  scorea = scorea + dice[level[teama] + xx];
+  scoreb = scoreb + dice[level[teamb] + yy];
 
 
   document.getElementById("fix_main").innerHTML =
@@ -235,17 +278,30 @@ function score() {
     " (" + scorea + ")v(" + scoreb + ") " +
     team_name[teamb];
 
+
+  document.getElementById("teama_level").innerHTML =
+    "RANK:" + (level[teama] / 6) + " " + xx;
+  document.getElementById("teamb_level").innerHTML =
+    "RANK:" + (level[teamb] / 6) + " " + yy;
+}
+
+function end_match() {
+  if (stage == 1 && scorea == scoreb) { scoreb = scorea + 1 };
+  results[fix_no] = scorea;
+  results[fix_no + 1] = scoreb;
   if (stage == 0) { tabsort() }
   if (fix_no == 94) { stage = 1; qf_fix() }
   if (stage == 1) { knockout() }
-
-
-  document.getElementById("match").innerHTML = "NEXT MATCH";
   fix_no = fix_no + 2;
-  play = 0;
-
-
+  scorea = 0; scoreb = 0;
+  document.getElementById("match").innerHTML = "NEXT MATCH";
+  document.getElementById("fixres").style.visibility = "visible";
+  document.getElementById("tables").style.visibility = "visible";
 }
+
+
+
+
 
 function tabsort() {
   if (scorea > scoreb) {
@@ -278,11 +334,11 @@ function tabsort() {
   tabdata[(teama * 7) + 6] =
     (tabdata[(teama * 7) + 4] * 10000) +
     (tabdata[(teama * 7) + 5] * 100) +
-    teama;
+    (15 - teama);
   tabdata[(teamb * 7) + 6] =
     (tabdata[(teamb * 7) + 4] * 10000) +
     (tabdata[(teamb * 7) + 5] * 100) +
-    teamb;
+    (15 - teamb);
 
   tabdata[teama * 7]++;
   tabdata[teamb * 7]++;
@@ -366,6 +422,10 @@ function clear_screen() {
 
   document.getElementById("match_hd").innerHTML = "";
   document.getElementById("fix_main").innerHTML = "";
+  document.getElementById("teama_level").innerHTML = "";
+  document.getElementById("teamb_level").innerHTML = "";
+  document.getElementById("timer").innerHTML = "";
+
 
 
 
