@@ -6,6 +6,13 @@ const team_name = [
   "......."
 ]
 
+const myteam = [
+  "red", "black", "black", "black",
+  "black", "red", "black", "black",
+  "black", "black", "red", "black",
+  "black", "black", "black", "red"
+]
+
 const half_name = ["1st", "1st", "2nd"]
 
 const fixlist = [
@@ -33,7 +40,7 @@ const dice = [
 
 
 var teama; var teamb; var fix_no; var play = 0; var scorea; var scoreb;
-var qteam; var stage = 0; var brackets; var time = 0; var half = 0; var scorea = 0; var scoreb = 0; var kick_off = 0; var subx = 0;
+var qteam; var stage = 0; var brackets; var time = 0; var half = 0; var scorea = 0; var scoreb = 0; var kick_off = 0; var subx = 0; var goal_yes = 0;
 
 
 const group_name = [
@@ -114,7 +121,6 @@ function start() {
   }
 
 
-
 }
 
 
@@ -140,7 +146,7 @@ function tables() {
 
     qteam = "LG" + (rank[i]);
 
-
+    document.getElementById(qteam).style.color = myteam[i];
     document.getElementById(qteam).innerHTML = team_name[i] + "..." +
       tabdata[x] + " " +
       tabdata[x + 1] + " " +
@@ -194,9 +200,14 @@ function fixres() {
 
     if (i < 48) { brackets = "(" + gnx + ") " } else { brackets = "" };
 
-    document.getElementById("fix" + (i)).innerHTML =
-      brackets + teama + " (" +
+    if (myteam[fixlist[ix]] == "red") { teama = "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" };
+    if (myteam[fixlist[ix + 1]] == "red") { teamb = "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" };
+
+
+    xxx = brackets + teama + " (" +
       results[ix] + ")v(" + results[ix + 1] + ") " + teamb;
+
+    document.getElementById("fix" + (i)).innerHTML = xxx;
   }
 
   for (i = 1; i < 7; i++) {
@@ -206,6 +217,15 @@ function fixres() {
   document.getElementById("qfhead").innerHTML = "QUARTER FINALS";
   document.getElementById("sfhead").innerHTML = "SEMI FINALS";
   document.getElementById("fhead").innerHTML = "FINAL";
+
+  for (f = 1; f < 7; f++) { document.getElementById("teama" + f).innerHTML = team_name[0]; }
+
+  for (f = 1; f < 7; f++) { document.getElementById("teamb" + f).innerHTML = team_name[5]; }
+
+  for (f = 1; f < 7; f++) { document.getElementById("teamc" + f).innerHTML = team_name[10]; }
+
+  for (f = 1; f < 7; f++) { document.getElementById("teamd" + f).innerHTML = team_name[15]; }
+
 
 }
 
@@ -231,6 +251,8 @@ function match() {
 
 function match_setup() {
   clear_screen();
+  document.getElementById("goal").style.visibility = "visible";
+
   document.getElementById("fixres").style.visibility = "hidden";
   document.getElementById("tables").style.visibility = "hidden";
 
@@ -253,9 +275,15 @@ function match_setup() {
     "RANK:" + (level[teama] / 6);
   document.getElementById("teamb_level").innerHTML =
     "RANK:" + (level[teamb] / 6);
+  document.getElementById("odds").innerHTML =
+    "WIN: 56% -------------- DRAW: 23% -------------- WIN: 21%";
   //document.getElementById("timer").innerHTML = half_name[half] + " HALF: " + time;
   document.getElementById("match").innerHTML = "1st HALF";
 
+  for (f = 1; f < 11; f++) {
+    document.getElementById("ball" + f).innerHTML = "&#9917";
+
+  }
 
 }
 
@@ -299,7 +327,25 @@ function end_match() {
   document.getElementById("tables").style.visibility = "visible";
 }
 
+function goal_add() {
+  if (goal_yes == 0) {
+    document.getElementById("ball_goal").innerHTML = "&#9917";
+    document.getElementById("ball10").innerHTML = "";
+    document.getElementById("goal").innerHTML = "REMOVE";
 
+    goal_yes = 1; return;
+  }
+
+  if (goal_yes == 1) {
+    document.getElementById("ball_goal").innerHTML = "";
+    document.getElementById("ball10").innerHTML = "&#9917";
+    document.getElementById("goal").innerHTML = "ADD";
+
+    goal_yes = 0; return;
+  }
+
+
+}
 
 
 
@@ -397,6 +443,9 @@ function qf_fix() {
 
 function clear_screen() {
 
+  document.getElementById("goal").style.visibility = "hidden";
+
+
   document.getElementById("LGA_HD").innerHTML = " ";
   document.getElementById("LGB_HD").innerHTML = " ";
   document.getElementById("LGC_HD").innerHTML = " ";
@@ -426,9 +475,20 @@ function clear_screen() {
   document.getElementById("teamb_level").innerHTML = "";
   document.getElementById("timer").innerHTML = "";
 
+  for (f = 1; f < 7; f++) { document.getElementById("teama" + f).innerHTML = "" }
 
+  for (f = 1; f < 7; f++) { document.getElementById("teamb" + f).innerHTML = "" }
 
+  for (f = 1; f < 7; f++) { document.getElementById("teamc" + f).innerHTML = "" }
 
+  for (f = 1; f < 7; f++) { document.getElementById("teamd" + f).innerHTML = "" }
+
+  for (f = 1; f < 11; f++) {
+    document.getElementById("ball" + f).innerHTML = "";
+  }
+
+  document.getElementById("odds").innerHTML =
+    "";
 
 
 
