@@ -5,8 +5,65 @@ body {
   font-size: 32px;
 }
 
+#odds {
+  position: absolute;
+  top: 270px;
+  left: 30px;
+  font-size: 30px;
+  color: crimson;
+}
+
+.balls p {
+  position: absolute;
+  font-size: 50px;
+  top: 400px;
+
+}
+
+#ball1 {
+  left: 125px
+}
+
+#ball2 {
+  left: 175px
+}
+
+#ball3 {
+  left: 225px
+}
+
+#ball4 {
+  left: 275px
+}
+
+#ball5 {
+  left: 325px
+}
+
+#ball6 {
+  left: 375px
+}
+
+#ball7 {
+  left: 425px
+}
+
+#ball8 {
+  left: 475px
+}
+
+#ball9 {
+  left: 525px
+}
+
+#ball10 {
+  left: 575px
+}
+
+
+
 .butts button {
-  position: fixed;
+  position: absolute;
   background-color: beige;
   color: brown;
   padding: 5px 15px;
@@ -15,6 +72,20 @@ body {
   width: 350px;
   height: 100px;
   top: 620px;
+}
+
+#goal {
+  padding: 5px 15px;
+  font-size: 20px;
+  border-radius: 15px;
+  width: 130px;
+  height: 50px;
+  top: 455px;
+}
+
+#ball_goal {
+  top: 150px;
+  left: 350px;
 }
 
 #fixres {
@@ -270,16 +341,208 @@ body {
 #teamb_level {
   position: absolute;
   top: 220px;
-  left: 958px;
+  left: 920px;
   font-size: 30px;
   color: crimson;
 }
-
-
 
 #end_msg {
   position: fixed;
   font-size: 30px;
   left: 750px;
   top: 580px;
+}
+
+#teama1 {
+  position: absolute;
+  top: 60px;
+  left: 58px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teama2 {
+  position: absolute;
+  top: 60px;
+  left: 610px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teama3 {
+  position: absolute;
+  top: 60px;
+  left: 778px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teama4 {
+  position: absolute;
+  top: 270px;
+  left: 250px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teama5 {
+  position: absolute;
+  top: 270px;
+  left: 418px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teama6 {
+  position: absolute;
+  top: 270px;
+  left: 970px;
+  font-size: 20px;
+  color: crimson;
+}
+
+
+#teamb1 {
+  position: absolute;
+  top: 100px;
+  left: 250px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamb2 {
+  position: absolute;
+  top: 120px;
+  left: 610px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamb3 {
+  position: absolute;
+  top: 120px;
+  left: 778px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamb4 {
+  position: absolute;
+  top: 310px;
+  left: 58px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamb5 {
+  position: absolute;
+  top: 330px;
+  left: 418px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamb6 {
+  position: absolute;
+  top: 330px;
+  left: 970px;
+  font-size: 20px;
+  color: crimson;
+}
+
+
+#teamc1 {
+  position: absolute;
+  top: 160px;
+  left: 58px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamc2 {
+  position: absolute;
+  top: 140px;
+  left: 418px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamc3 {
+  position: absolute;
+  top: 160px;
+  left: 970px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamc4 {
+  position: absolute;
+  top: 370px;
+  left: 250px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamc5 {
+  position: absolute;
+  top: 350px;
+  left: 610px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamc6 {
+  position: absolute;
+  top: 370px;
+  left: 778px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamd1 {
+  position: absolute;
+  top: 200px;
+  left: 250px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamd2 {
+  position: absolute;
+  top: 200px;
+  left: 418px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamd3 {
+  position: absolute;
+  top: 180px;
+  left: 970px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamd4 {
+  position: absolute;
+  top: 410px;
+  left: 58px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamd5 {
+  position: absolute;
+  top: 410px;
+  left: 610px;
+  font-size: 20px;
+  color: crimson;
+}
+
+#teamd6 {
+  position: absolute;
+  top: 390px;
+  left: 778px;
+  font-size: 20px;
+  color: crimson;
 }
